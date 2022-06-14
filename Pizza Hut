@@ -1,0 +1,69 @@
+#Dictionary to have the elements of types of pizza and their stock and prize dictionary
+Price_Stock={"farm house thin crust":{"stock":5,"prize":250},"deluxe veggie thin crust":{"stock":6,"prize":300},"farm house pan crust":{"stock":7,"prize":350},"deluxe veggie pan crust":{"stock":8,"prize":400},"farm house cheese crust":{"stock":9,"prize":450},"deluxe veggie cheese crust":{"stock":10,"prize":500},"chicken supreme thin crust":{"stock":5,"prize":350},"chicken sausage thin crust":{"stock":6,"prize":400},"chicken supreme pan crust":{"stock":7,"prize":450},"chicken sausage pan crust":{"stock":8,"prize":500},"chicken supreme cheese crust":{"stock":9,"prize":550},"chicken sausage cheese crust":{"stock":10,"prize":600}}
+print("Welcome to Yummy Tummy Pizza Hut!!!")
+customer_purchase={}#Empty dictionary to save the list of pizza the user wants to book
+do_you=1 #initialize the variable 
+while do_you==1: #start the loop
+    veg_nonveg=int(input("Please press \n1 for veg pizza\n2 for non-veg pizza\n")) #select veg/non-veg pizza
+    crust=int(input("please select the crust\n1 for thin crust\n2 for pan crust\n3 for cheese crust\n")) #select the crust
+    if veg_nonveg==1:
+        option=int(input("Please select the pizza type\n1 for farm house\n2 for deluxe veggie\n"))#select the pizza type
+    elif veg_nonveg==2:
+        option = int(input("Please select the pizza type\n1 for chicken supreme\n2 for chicken sausage\n"))#select the pizza type
+    if veg_nonveg not in [1,2] or crust not in [1,2,3] or option not in [1,2]:#check if the user entered correct value
+        print("Please select correct option for seamless experience!!!")
+        break
+    """Create the string for the selected pizza"""
+    if crust==1 and option==1 and veg_nonveg==1:
+        customer_pizza= "farm house thin crust"
+    elif crust==2 and option==1 and veg_nonveg==1:
+        customer_pizza = "farm house pan crust"
+    elif crust==3 and option==1 and veg_nonveg==1:
+        customer_pizza = "farm house cheese crust"
+    elif crust==1 and option==2 and veg_nonveg==1:
+        customer_pizza = "deluxe veggie thin crust"
+    elif crust==2 and option==2 and veg_nonveg==1:
+        customer_pizza = "deluxe veggie pan crust"
+    elif crust==3 and option==2 and veg_nonveg==1:
+        customer_pizza = "deluxe veggie cheese crust"
+    elif crust==1 and option==1 and veg_nonveg==2:
+        customer_pizza= "chicken supreme thin crust"
+    elif crust==2 and option==1 and veg_nonveg==2:
+        customer_pizza = "chicken supreme pan crust"
+    elif crust==3 and option==1 and veg_nonveg==2:
+        customer_pizza = "chicken supreme cheese crust"
+    elif crust==1 and option==2 and veg_nonveg==2:
+        customer_pizza = "chicken sausage thin crust"
+    elif crust==2 and option==2 and veg_nonveg==2:
+        customer_pizza = "chicken sausage pan crust"
+    elif crust==3 and option==2 and veg_nonveg==2:
+        customer_pizza = "chicken sausage cheese crust"
+    count=int(input(f"How many {customer_pizza} do you need?")) #ask if how many pizza they need
+    if Price_Stock[customer_pizza]["stock"]>count:
+        
+        """Check if the stock is avaialbe"""
+        Price_Stock[customer_pizza]["stock"] -= count #update the stock
+        print(customer_pizza, "is available. The prize of single pizza is", Price_Stock[customer_pizza]["prize"])
+        if customer_pizza in customer_purchase.keys():
+            """Update the customer purchase dictionary"""
+            customer_purchase[customer_pizza]["prize"]+=Price_Stock[customer_pizza]["prize"]*count
+            customer_purchase[customer_pizza]["count"]+=count
+        else:
+            """Add the new pizza in the dictionary"""
+            customer_purchase[customer_pizza]={"prize":Price_Stock[customer_pizza]["prize"]*count,"count":count}
+        
+    else:
+        print("Out of stock! Sorry!!!")
+    do_you=int(input("Do you want to place another pizza order?\nPress 1 for yes \nPress 2 for no\n"))
+else:
+    """Displaying the bill"""
+    print("Thanks for purchasing yummy pizza!!!")
+    print("Your bill:")
+    print("PIZZA NAME".ljust(40," "),"Quantity".center(10," "),"Cost".center(10," "))
+    total=0
+    """Display the bill with the print alignment"""
+    for i in customer_purchase:
+        print(i.title().ljust(40," "),str(customer_purchase[i]["count"]).center(10," "),str(customer_purchase[i]["prize"]).center(10," "))
+        total+=customer_purchase[i]["prize"] #update the total amount
+    print("The total amount to be paid- Rs.",total)
+print("Thank you for shoping! Visit Again!!!")
