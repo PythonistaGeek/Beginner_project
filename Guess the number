@@ -1,0 +1,40 @@
+import random #Importing a module called as random
+print("Welcome to guess the number game!!!")
+while True: #creates an infinite loop
+  ans=random.randint(1,10) #getting a random number with the help of randint function and assign it to a variable.
+  print("\n\n\nYou have three chances to guess the number.")
+  lives=3 #initialising the lives to be 3
+  answer_list=[] #Empty list creation
+  while lives>0: #creates a loop which runs till the lives becomes 0
+    user_guess=int(input("Guess a number between 1-10 (1 and 10 included) : ")) #getting the user's guess
+    
+    if ans==user_guess:
+      #checks for correct answer
+      print("Wow you gessed it right!!!")
+      break #breaking the inner loop as the user guessed the answer correctly
+    elif user_guess in answer_list:
+      #checks if the user has already guessed the same number.
+      print("You already guessed the same number!!!")
+      
+    elif user_guess<1 or user_guess>10:
+      #checkes if the user guessed the number out of range.
+      print("Ohho your guess is not within the range just guess between 1-10.")
+    else:
+      #control comes here if the user has put a valid input but not the correct answer
+      lives-=1#decrementing the life
+      answer_list.append(user_guess)#append the valid guess for future check
+      if lives!=0:
+        #if some life is left display the life and proceed the inner loop
+        print("You guessed it wrong! you still have",lives,"left")
+      else:
+        #if no life is left display game over
+        print("Game over.\nThe number was",ans)
+      
+  do_you=input("Do You want to play again???\nType 'yes' to continue and 'no' to stop: ").lower()#checks if user wants to continue or quit.
+  if do_you=="yes":
+    #continue the outer loop if the user said yes.
+    continue
+  else:
+    # break the outer loop as the user wants to quit.
+    print("Thank you for playing!!!")
+    break
